@@ -29,7 +29,7 @@ static int	draw_message(const char *str)
 	return (0);
 }
 
-static int	manage_messages(int argc, char **argv)
+static int	megaphone(int argc, char **argv)
 {
 	int	i = 0;
 
@@ -43,5 +43,5 @@ static int	manage_messages(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	return (manage_messages(argc, ++argv));
+	return (megaphone(argc, ++argv));
 }

@@ -19,7 +19,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) -c $< -o $@
 
 run: all
-	@./$(NAME)
+	@valgrind ./$(NAME)
 
 clean:
 	@echo "\033[1;32m===========================================\033[0m"
