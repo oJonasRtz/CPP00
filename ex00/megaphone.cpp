@@ -22,6 +22,7 @@ static int	draw_message(const char *str)
 				case 'a': draw_char('\a'); break;
 				case 'r': draw_char('\r'); break;
 				case '\\': draw_char('\\'); break;
+				default: return (0);
 			}
 		else
 			draw_char((char)std::toupper(str[i]));
