@@ -1,10 +1,13 @@
 
-NAME = megaphone
+NAME = PhoneBook
 
 CC = c++
 FLAGS = -g3 -Wall -Werror -Wextra -std=c++98
 
-SRC = 
+INCLUDE = includes
+SRC =	src/main.cpp \
+		src/Contact.cpp \
+		src/PhoneBook.cpp
 OBJS = $(SRC:.cpp=.o)
 
 RM = rm -f
@@ -12,14 +15,14 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -I. -o $(NAME) $(OBJS)
+	@$(CC) $(FLAGS) -I$(INCLUDE) -o $(NAME) $(OBJS)
 
-%.o: %.cpp
+src/%.o: src/%.cpp
 	@echo "\033[1;32mCompiling	->	$<\033[0m"
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -I$(INCLUDE) -c $< -o $@
 
 run: all
-	@./$(NAME)
+	@valgrind ./$(NAME)
 
 clean:
 	@echo "\033[1;32m===========================================\033[0m"
