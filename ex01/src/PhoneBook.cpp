@@ -90,17 +90,18 @@ void	PhoneBook::add_contact(void)
 }
 static void	show_contact(Contact &contact)
 {
-	draw_message(ORANGE "Name: " RESET);
-	draw_message(contact.get_first_name());
-	draw_message(ORANGE "\nLast Name: " RESET);
-	draw_message(contact.get_last_name());
-	draw_message(ORANGE "\nNickname: " RESET);
-	draw_message(contact.get_nickname());
-	draw_message(ORANGE "\nPhone number: " RESET);
-	draw_message(contact.get_phone_number());
-	draw_message(ORANGE "\nDarkest secret: " RESET);
-	draw_message(contact.get_darkest_secret());
-	draw_message("\n\n");
+	/*
+		tamanho maximo 10 char
+		texto alinhado a direita
+		se o texto for maior que a coluna deve ser truncado e substituido por (.)
+		ex: tralalalalalalallalaala
+			tralala.| 
+		lista
+		----------------------------------------------
+		 index|   first name|  last name|  nickname
+		----------------------------------------------
+	 	 0(10)|	   lala (10)|  silva(10)|  sdffsff(10) 
+	*/
 }
 
 void	PhoneBook::search_contact(void)

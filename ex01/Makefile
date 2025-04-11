@@ -1,5 +1,5 @@
 
-NAME = PhoneBook
+NAME = phonebook
 
 CC = c++
 FLAGS = -g3 -Wall -Werror -Wextra -std=c++98
