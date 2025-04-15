@@ -45,6 +45,28 @@ static int	is_digit(std::string &str)
 	return (1);
 }
 
+static bool	check_error(std::string temp)
+{
+	if (temp.empty())
+	{
+		draw_message(RED "Invalid input.\n" RESET);
+		return (true);
+	}
+	for (int i = 0; temp[i]; i++)
+	{
+		if (temp[i] < 32 || temp[i] > 126)
+		{
+			draw_message(RED "Only ASCII characters.\n" RESET);
+			return (true);
+		}
+	}
+	for (int i = 0; temp[i]; i++)
+		if (!std::isspace(temp[i]))
+			return (false);
+	draw_message(RED "Only spaces is forbiden.\n" RESET);
+	return (true);
+}
+
 //	Methods
 void	PhoneBook::add_contact(void)
 {
@@ -52,34 +74,37 @@ void	PhoneBook::add_contact(void)
 	std::string	input;
 
 	draw_message("Enter first name: ");
-	if (!std::getline(std::cin, input))
+	std::getline(std::cin, input);
+	if (check_error(input))
 		return ;
 	newContact.set_first_name(input);
 
 	draw_message("Enter last name: ");
-	if (!std::getline(std::cin, input))
+	std::getline(std::cin, input);
+	if (check_error(input))
 		return ;
 	newContact.set_last_name(input);
 	
 	draw_message("Enter the nickname: ");
-	if (!std::getline(std::cin, input))
+	std::getline(std::cin, input);
+	if (check_error(input))
 		return ;
 	newContact.set_nickname(input);
 
 	draw_message("Enter the phone number: ");
-	if (!std::getline(std::cin, input))
-		return ;
+	std::getline(std::cin, input);
 	while (!is_digit(input))
 	{
 		draw_message(RED "Invalid input!(ONLY NUMBERS)\n" RESET);
 		draw_message("Enter the phone number: ");
 		if (!std::getline(std::cin, input))
-		return ;
+			return ;
 	}
 	newContact.set_phone_number(input);
 
 	draw_message("Enter the darkest secret: ");
-	if (!std::getline(std::cin, input))
+	std::getline(std::cin, input);
+	if (check_error(input))
 		return ;
 	newContact.set_darkest_secret(input);
 
@@ -109,19 +134,6 @@ static void	draw_phonebook(void)
 }
 static void	show_contact(Contact &contact, int index)
 {
-	(void)contact;
-	/*
-		tamanho maximo 10 char
-		texto alinhado a direita
-		se o texto for maior que a coluna deve ser truncado e substituido por (.)
-		ex: tralalalalalalallalaala
-			tralala.| 
-		lista
-		----------------------------------------------
-		 index|   first name|  last name|  nickname
-		----------------------------------------------
-	 	 0(10)|	   lala (10)|  silva(10)|  sdffsff(10) 
-	*/
 	std::cout << std::setfill(' ') << std::setw(10) << index << "|";
 	std::cout << std::setfill(' ') << std::setw(10) << corrct_str(contact.get_first_name()) << "|";
 	std::cout << std::setfill(' ') << std::setw(10) << corrct_str(contact.get_last_name()) << "|";
