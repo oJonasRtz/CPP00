@@ -88,8 +88,28 @@ void	PhoneBook::add_contact(void)
 	this->set_listlen();
 	this->set_oldest_contact();
 }
-static void	show_contact(Contact &contact)
+static std::string	corrct_str(std::string temp)
 {
+	if (temp.length() > 10)
+		temp = temp.substr(0, 9) + '.';
+	return (temp);
+}
+static void	draw_phonebook(void)
+{
+	std::cout << std::setfill('-') << std::setw(45) << "-" << std::endl;
+	std::cout << std::setfill(' ') << std::setw(10) <<  "Index";
+	draw_message("|");
+	std::cout << std::setfill(' ') << std::setw(10) <<  "First name";
+	draw_message("|");
+	std::cout << std::setfill(' ') << std::setw(10) <<  "Last name";
+	draw_message("|");
+	std::cout << std::setfill(' ') << std::setw(10) <<  "Nickname";
+	draw_message("|\n");
+	std::cout << std::setfill('-') << std::setw(42) << "-" << std::endl;
+}
+static void	show_contact(Contact &contact, int index)
+{
+	(void)contact;
 	/*
 		tamanho maximo 10 char
 		texto alinhado a direita
@@ -102,6 +122,10 @@ static void	show_contact(Contact &contact)
 		----------------------------------------------
 	 	 0(10)|	   lala (10)|  silva(10)|  sdffsff(10) 
 	*/
+	std::cout << std::setfill(' ') << std::setw(10) << index << "|";
+	std::cout << std::setfill(' ') << std::setw(10) << corrct_str(contact.get_first_name()) << "|";
+	std::cout << std::setfill(' ') << std::setw(10) << corrct_str(contact.get_last_name()) << "|";
+	std::cout << std::setfill(' ') << std::setw(10) << corrct_str(contact.get_nickname()) <<"|\n";
 }
 
 void	PhoneBook::search_contact(void)
@@ -120,18 +144,24 @@ void	PhoneBook::search_contact(void)
 		std::istringstream str (input);
 		if (!(str >> index))
 			return ;
+		index--;
 		if (index <= this->get_oldest_contact() && index >= 0 && index < 8)
-			show_contact(this->list[index]);
+		{
+			draw_phonebook();
+			show_contact(this->list[index], index + 1);
+		}
 		else
 			draw_message("Contact doesn't exist.\n");
 	}
 	else if (input == "NO" || input == "no" || input == "No")
 		this->show_contacts();
+	std::cout << std::setfill('-') << std::setw(45) << "-" << std::endl;
 }
 void	PhoneBook::show_contacts(void)
 {
-	int	i = 0;
+	int	i = -1;
 
-	while (i < this->get_listlen())
-		show_contact(this->list[i++]);
+	draw_phonebook();
+	while (++i < this->get_listlen())
+		show_contact(this->list[i], i + 1);
 }

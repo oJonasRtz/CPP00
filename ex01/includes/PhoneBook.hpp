@@ -3,6 +3,8 @@
 
 # include "Contact.hpp"
 # include <iostream>
+# include <cstdio>
+# include <iomanip>
 # include <sstream>
 # define RED "\033[1;31m"
 # define BLUE "\033[1;34m"
