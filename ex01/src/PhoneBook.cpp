@@ -145,28 +145,21 @@ void	PhoneBook::search_contact(void)
 	std::string	input;
 	int			index;
 
-	draw_message(ORANGE "Are you looking for an especific contact(YES/NO): " RESET);
+	this->show_contacts();
+	draw_message(ORANGE "Enter the contact index: " RESET);
 	if (!std::getline(std::cin, input))
 		return ;
-	if (input == "YES" || input == "yes" || input == "Yes")
+	std::istringstream str (input);
+	if (!(str >> index))
+		return ;
+	index--;
+	if (index <= this->get_oldest_contact() && index >= 0 && index < 8)
 	{
-		draw_message("Enter the contact index: ");
-		if (!std::getline(std::cin, input))
-			return ;
-		std::istringstream str (input);
-		if (!(str >> index))
-			return ;
-		index--;
-		if (index <= this->get_oldest_contact() && index >= 0 && index < 8)
-		{
-			draw_phonebook();
-			show_contact(this->list[index], index + 1);
-		}
-		else
-			draw_message("Contact doesn't exist.\n");
+		draw_phonebook();
+		show_contact(this->list[index], index + 1);
 	}
-	else if (input == "NO" || input == "no" || input == "No")
-		this->show_contacts();
+	else
+		draw_message("Contact doesn't exist.\n");
 	std::cout << std::setfill('-') << std::setw(45) << "-" << std::endl;
 }
 void	PhoneBook::show_contacts(void)
